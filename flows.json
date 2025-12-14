@@ -1,0 +1,1436 @@
+[
+    {
+        "id": "54a42a8de7bec392",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f01159d3e397071d",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#03aa5c",
+                "baseFont": "Lucida Sans Typewriter,Lucida Console,Monaco,monospace",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#03aa5c",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#03aa5c",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#04f585",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#03aa5c",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "Lucida Sans Typewriter,Lucida Console,Monaco,monospace"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "true",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "bb89da33b37229d3",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "724fc9168bac9865",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c17c8530551d42b2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.166.190.152",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "eb0e524e4acb4c34",
+        "type": "ui_tab",
+        "name": "Garden",
+        "icon": "fa-leaf",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "360133341d7b71ef",
+        "type": "ui_group",
+        "name": "Sensors",
+        "tab": "eb0e524e4acb4c34",
+        "order": 1,
+        "disp": true,
+        "width": "30",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1149d87124f5c87c",
+        "type": "ui_tab",
+        "name": "Setting",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3236b443e3e56868",
+        "type": "ui_group",
+        "name": "Threholds",
+        "tab": "1149d87124f5c87c",
+        "order": 1,
+        "disp": true,
+        "width": 20,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fbff7e01f9714833",
+        "type": "ui_tab",
+        "name": "AI Assistant",
+        "icon": "ai",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ba6741385424d3f0",
+        "type": "ui_group",
+        "name": "Chat",
+        "tab": "fbff7e01f9714833",
+        "order": 1,
+        "disp": true,
+        "width": "16",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e332eb4bba34a8cc",
+        "type": "ui_tab",
+        "name": "Chart view",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "95291232aec137c4",
+        "type": "ui_tab",
+        "name": "Led Control",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ef5c1b36f0639d77",
+        "type": "ui_group",
+        "name": "Led Control",
+        "tab": "95291232aec137c4",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "fca515a537726609",
+        "type": "ui_group",
+        "name": "Light Control",
+        "tab": "1149d87124f5c87c",
+        "order": 2,
+        "disp": true,
+        "width": 20,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "27181a8790fea72e",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "Soil Raw",
+        "topic": "garden/soil/raw",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 40,
+        "wires": [
+            [
+                "02fe3a576926320f"
+            ]
+        ]
+    },
+    {
+        "id": "02fe3a576926320f",
+        "type": "ui_gauge",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "group": "360133341d7b71ef",
+        "order": 1,
+        "width": 10,
+        "height": 10,
+        "gtype": "gage",
+        "title": "Soil Moisture",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4095",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 250,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ba023cfbb7ca9a14",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "Temperature",
+        "topic": "garden/dht/temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "8caf20a58b9d23cc"
+            ]
+        ]
+    },
+    {
+        "id": "bfce18b4d2960d0e",
+        "type": "ui_text_input",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "label": "Temperature Threholds",
+        "tooltip": "",
+        "group": "3236b443e3e56868",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "settings/temp_threshold",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "94d5f12aba3d1c14"
+            ]
+        ]
+    },
+    {
+        "id": "a10806d267317a50",
+        "type": "ui_button",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "group": "3236b443e3e56868",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Setting Save",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "settings/save",
+        "topicType": "msg",
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "42425c546f1e600e"
+            ]
+        ]
+    },
+    {
+        "id": "42425c546f1e600e",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save Settings",
+        "func": "if (msg.topic === \"settings/save\") {\n    // Lấy giá trị đang nhập\n    var temp = flow.get(\"temp_threshold\") || 0;\n\n    // Lưu vào memory của Node-RED\n    flow.set(\"threshold_temp\", temp);\n\n    msg.payload = \"Saved! Temp=\" + temp;\n    return msg;\n}\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "94d5f12aba3d1c14",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save temp input",
+        "func": "flow.set(\"temp_threshold\", msg.payload);\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "06e522bd621b679e",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "topic": "garden/dht/temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "01eea78ba059600f"
+            ]
+        ]
+    },
+    {
+        "id": "01eea78ba059600f",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Check Threholds",
+        "func": "let temp = flow.get(\"threshold_temp\") || 0;\n\nlet alertList = [];\n\nif (msg.topic === \"garden/dht/temp\") {\n    let temperature = Number(msg.payload);\n    if (temperature > temp) {\n        alertList.push(\"Temperature high: \" + temperature);\n    }\n}\n\nif (alertList.length > 0) {\n    msg.payload = alertList.join(\"\\n\");\n    return msg;    // cho qua email node\n}\n\nreturn null;      // không gửi mail\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "24d3f8ab2396686e"
+            ]
+        ]
+    },
+    {
+        "id": "059a809b91d23db4",
+        "type": "e-mail",
+        "z": "54a42a8de7bec392",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "dtduy23@clc.fitus.edu.vn",
+        "dname": "",
+        "x": 810,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "a098ecf0777b9ef3",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "MQTT DHT Temp",
+        "topic": "garden/dht/temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 340,
+        "wires": [
+            [
+                "cdad67f5ac6707ba"
+            ]
+        ]
+    },
+    {
+        "id": "cdad67f5ac6707ba",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save temp",
+        "func": "// msg.payload = nhiệt độ môi trường từ DHT11\n\nlet t = Number(msg.payload);\n\nif (!isNaN(t)) {\n    // Lưu vào flow context để chatbot dùng\n    flow.set(\"last_temp\", t);\n    node.status({ fill: \"green\", shape: \"dot\", text: \"temp=\" + t + \"°C\" });\n} else {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"invalid temp\" });\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0ec77adeab10aa70",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "MQTT Soil Raw",
+        "topic": "garden/soil/raw",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "141bafc2b0f953a9"
+            ]
+        ]
+    },
+    {
+        "id": "141bafc2b0f953a9",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save soil raw",
+        "func": "// msg.payload = giá trị raw từ cảm biến độ ẩm đất\n\nlet raw = Number(msg.payload);\n\nif (!isNaN(raw)) {\n    // Lưu vào flow context để chatbot dùng\n    flow.set(\"last_soil_raw\", raw);\n    node.status({ fill: \"green\", shape: \"dot\", text: \"soil_raw=\" + raw });\n} else {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"invalid soil\" });\n}\n\n// Cho các node khác (chart, gauge...) dùng tiếp\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "04adcc98c5fc7c27",
+        "type": "ui_text_input",
+        "z": "54a42a8de7bec392",
+        "name": "UI Input",
+        "label": "Bạn",
+        "tooltip": "",
+        "group": "ba6741385424d3f0",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": "",
+        "topic": "topic",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "msg",
+        "x": 320,
+        "y": 560,
+        "wires": [
+            [
+                "99c83b2561952efc",
+                "ba73cc182fe7a6c1"
+            ]
+        ]
+    },
+    {
+        "id": "99c83b2561952efc",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Prepare Chat",
+        "func": "// Lấy text người dùng\nlet userText = msg.payload || \"\";\n\n// CLEAR UI INPUT\nmsg.ui_control = { value: \"\" };   // <<< clear input khi trả ra UI\n\n// LƯU PROMPT CHO GEMINI\nlet soilRaw = flow.get(\"last_soil_raw\");\nlet temp    = flow.get(\"last_temp\");\nlet lightLux = flow.get(\"last_light_lux\");\n\nif (soilRaw === undefined) soilRaw = \"chưa có dữ liệu\";\nif (temp === undefined) temp = \"chưa có dữ liệu\";\nif (lightLux === undefined) lightLux = \"chưa có dữ liệu\";\n\nlet systemPrompt = `\nBạn là trợ lý AI cho hệ thống vườn thông minh.\n\nDữ liệu cảm biến mới nhất:\n- Độ ẩm đất (raw): ${soilRaw}\n- Nhiệt độ môi trường: ${temp} °C\n- Cường độ ánh sáng: ${lightLux} lux\n\nNếu độ ẩm đất là 4095 thì ngoại trừ khả năng đất cực khô thì còn có khả năng là cảm biến chưa được cắm vào đất nhé.\nHãy trả lời thân thiện bằng tiếng Việt.\n`;\n\nmsg.fullPrompt =\n  systemPrompt + \"\\n\\nNgười dùng: \" + userText + \"\\nTrợ lý:\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 560,
+        "wires": [
+            [
+                "323a89e249db492e"
+            ]
+        ]
+    },
+    {
+        "id": "323a89e249db492e",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "BuildGeminiRequest",
+        "func": "// msg.fullPrompt đã được tạo ở node Prepare Chat\n\nmsg.payload = {\n  contents: [\n    {\n      role: \"user\",\n      parts: [\n        { text: msg.fullPrompt }\n      ]\n    }\n  ]\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 560,
+        "wires": [
+            [
+                "34c08b4e73661d20"
+            ]
+        ]
+    },
+    {
+        "id": "34c08b4e73661d20",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Call Gemini",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyBbBCcky_Mh2wlJxdzmiKB1ActoEslIig0",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 1170,
+        "y": 560,
+        "wires": [
+            [
+                "641255e0bad30c87"
+            ]
+        ]
+    },
+    {
+        "id": "641255e0bad30c87",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "ParseGeminiResponse",
+        "func": "let data = msg.payload;\nlet reply = \"\";\n\n// ===== 1. Nếu API báo lỗi =====\nif (data?.error) {\n    msg.payload = \"Lỗi từ Gemini: \" + data.error.message;\n    return msg;\n}\n\n// ===== 2. Lấy text trong nhiều dạng khác nhau =====\nreply =\n  data?.candidates?.[0]?.content?.parts?.[0]?.text ||\n  data?.candidates?.[0]?.output_text ||\n  data?.text ||\n  \"\";\n\n// Nếu vẫn không có text → báo lỗi\nif (!reply) {\n  msg.payload = \"Lỗi khi đọc phản hồi từ Gemini.\";\n  return msg;\n}\n\n// ===== 3. Chèn dữ liệu sensor =====\nlet soilRaw = flow.get(\"last_soil_raw\");\nlet temp = flow.get(\"last_temp\");\n\nlet extraInfo = \"\";\nif (soilRaw !== undefined || temp !== undefined) {\n  extraInfo =\n    \"\\n\\nThông tin cảm biến hiện tại: soil raw = \" +\n    soilRaw +\n    \", nhiệt độ = \" + temp + \" °C\";\n}\n\nmsg.payload = reply + extraInfo;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 440,
+        "wires": [
+            [
+                "1d7ec559425c7ff1"
+            ]
+        ]
+    },
+    {
+        "id": "ba73cc182fe7a6c1",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "User To Chat UI",
+        "func": "// msg.payload hiện đang là câu hỏi người dùng gõ\nmsg.role = \"user\";\nmsg.text = msg.payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "73bffa04a6939828"
+            ]
+        ]
+    },
+    {
+        "id": "1d7ec559425c7ff1",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Gemini To UI Chat",
+        "func": "// msg.payload hiện đang là câu trả lời của Gemini\nmsg.role = \"assistant\";\nmsg.text = msg.payload;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 440,
+        "wires": [
+            [
+                "73bffa04a6939828"
+            ]
+        ]
+    },
+    {
+        "id": "73bffa04a6939828",
+        "type": "ui_template",
+        "z": "54a42a8de7bec392",
+        "group": "ba6741385424d3f0",
+        "name": "Chat Panel",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n  .chat-wrapper {\n    border-radius: 12px;\n    background: #ffffff;\n    padding: 10px 16px 16px;\n    height: 400px;\n    display: flex;\n    flex-direction: column;\n    box-shadow: 0 2px 6px rgba(0,0,0,0.05);\n  }\n\n  .chat-title {\n    font-size: 20px;\n    font-weight: 600;\n    margin-bottom: 8px;\n    color: #1abc9c;\n  }\n\n  .chat-box {\n    flex: 1;\n    overflow-y: auto;\n    padding-right: 4px;\n  }\n\n  .chat-message {\n    max-width: 80%;\n    margin: 4px 0;\n    padding: 8px 12px;\n    border-radius: 16px;\n    font-size: 14px;\n    line-height: 1.4;\n    white-space: pre-wrap;\n  }\n\n  .chat-message.user {\n    margin-left: auto;\n    background: #e8f7ff;\n  }\n\n  .chat-message.assistant {\n    margin-right: auto;\n    background: #f0f0f0;\n  }\n\n  .chat-sender {\n    font-size: 11px;\n    opacity: 0.7;\n    margin-bottom: 2px;\n  }\n</style>\n\n<div class=\"chat-wrapper\">\n  <div class=\"chat-title\">Chat</div>\n  <div id=\"chat-box\" class=\"chat-box\">\n    <div ng-repeat=\"m in chat track by $index\"\n         class=\"chat-message\"\n         ng-class=\"{'user': m.role === 'user', 'assistant': m.role === 'assistant'}\">\n      <div class=\"chat-sender\"\n           ng-bind=\"m.role === 'user' ? 'Bạn' : 'Assistant'\"></div>\n      <div ng-bind=\"m.text\"></div>\n    </div>\n  </div>\n</div>\n\n<script>\n  (function(scope) {\n    // Mảng lưu hội thoại trong UI (chỉ ở phía trình duyệt)\n    scope.chat = scope.chat || [];\n\n    scope.$watch('msg', function(msg) {\n      if (!msg) return;\n      if (typeof msg.text === 'undefined' ||\n          typeof msg.role === 'undefined') return;\n\n      scope.chat.push({\n        role: msg.role,\n        text: msg.text\n      });\n\n      // Tự cuộn xuống cuối\n      setTimeout(function() {\n        var box = document.getElementById('chat-box');\n        if (box) {\n          box.scrollTop = box.scrollHeight;\n        }\n      }, 0);\n    });\n  })(scope);\n</script>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1210,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a1b2c3d4e5f6g7h8",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "MQTT Light Lux",
+        "topic": "garden/light/lux",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 460,
+        "wires": [
+            [
+                "b2c3d4e5f6g7h8i9"
+            ]
+        ]
+    },
+    {
+        "id": "b2c3d4e5f6g7h8i9",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save light lux",
+        "func": "// msg.payload = cường độ ánh sáng từ BH1750\n\nlet lux = Number(msg.payload);\n\nif (!isNaN(lux)) {\n    // Lưu vào flow context để chatbot dùng\n    flow.set(\"last_light_lux\", lux);\n    node.status({ fill: \"green\", shape: \"dot\", text: \"light=\" + lux + \" lux\" });\n} else {\n    node.status({ fill: \"red\", shape: \"ring\", text: \"invalid light\" });\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "711af8c800a3f6ac",
+        "type": "mqtt in",
+        "z": "54a42a8de7bec392",
+        "name": "Light Lux",
+        "topic": "garden/light/lux",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c17c8530551d42b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 840,
+        "y": 40,
+        "wires": [
+            [
+                "a175e87ff2c15d61"
+            ]
+        ]
+    },
+    {
+        "id": "a175e87ff2c15d61",
+        "type": "ui_gauge",
+        "z": "54a42a8de7bec392",
+        "name": "Light",
+        "group": "360133341d7b71ef",
+        "order": 3,
+        "width": 10,
+        "height": 10,
+        "gtype": "gage",
+        "title": "Light Lux",
+        "label": "lux",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "65535",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1010,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "thingspeak_inject",
+        "type": "inject",
+        "z": "54a42a8de7bec392",
+        "name": "Every 1 minute",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 900,
+        "wires": [
+            [
+                "thingspeak_prepare"
+            ]
+        ]
+    },
+    {
+        "id": "thingspeak_prepare",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Prepare ThingSpeak Data",
+        "func": "// Lấy dữ liệu từ flow context\nlet soilRaw = flow.get(\"last_soil_raw\") || 0;\nlet temp = flow.get(\"last_temp\") || 0;\nlet lightLux = flow.get(\"last_light_lux\") || 0;\n\nmsg.payload = {\n    api_key: \"8Q4PQGP66QX75FCU\",\n    field1: lightLux,      \n    field2: soilRaw,       \n    field3: temp      \n};\n\nmsg.headers = {\n    'Content-Type': 'application/json'\n};\n\nnode.status({\n    fill: \"blue\",\n    shape: \"dot\",\n    text: `M:${soilRaw} T:${temp}°C L:${lightLux}lux`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 900,
+        "wires": [
+            [
+                "thingspeak_http"
+            ]
+        ]
+    },
+    {
+        "id": "thingspeak_http",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Send to ThingSpeak",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/update.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "x": 640,
+        "y": 900,
+        "wires": [
+            [
+                "thingspeak_debug"
+            ]
+        ]
+    },
+    {
+        "id": "thingspeak_debug",
+        "type": "debug",
+        "z": "54a42a8de7bec392",
+        "name": "ThingSpeak Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "thingspeak_read_inject",
+        "type": "inject",
+        "z": "54a42a8de7bec392",
+        "name": "Read every 1 minutes",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1020,
+        "wires": [
+            [
+                "thingspeak_read_http"
+            ]
+        ]
+    },
+    {
+        "id": "thingspeak_read_http",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Read ThingSpeak",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/3202521/feeds.json?api_key=9HHZNPFSPBTLZC0Y&results=20",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 1020,
+        "wires": [
+            [
+                "thingspeak_parse"
+            ]
+        ]
+    },
+    {
+        "id": "thingspeak_parse",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Parse Data & Send to Charts",
+        "func": "// msg.payload chứa dữ liệu từ ThingSpeak\nlet feeds = (msg.payload && msg.payload.feeds) ? msg.payload.feeds : [];\n\nif (feeds.length === 0) {\n    node.status({ fill: \"yellow\", shape: \"ring\", text: \"No data\" });\n    return [null, null, null];\n}\n\n// Tạo labels và data cho bar chart\nlet labels = [];\nlet moistureData = [];\nlet tempData = [];\nlet lightData = [];\n\nfor (let i = 0; i < feeds.length; i++) {\n    const feed = feeds[i];\n    \n    // Chuyển đổi timestamp thành format HH:MM:SS\n    const timestamp = new Date(feed.created_at);\n    const timeLabel = timestamp.toLocaleTimeString('vi-VN', { \n        hour: '2-digit', \n        minute: '2-digit',\n        second: '2-digit',\n        hour12: false \n    });\n    labels.push(timeLabel);\n    \n    const light = parseFloat(feed.field1);\n    const moisture = parseFloat(feed.field2);\n    const temp = parseFloat(feed.field3);\n\n    moistureData.push(!isNaN(moisture) ? moisture : 0);\n    tempData.push(!isNaN(temp) ? temp : 0);\n    lightData.push(!isNaN(light) ? light : 0);\n}\n\nnode.status({\n    fill: \"green\",\n    shape: \"dot\",\n    text: `${feeds.length} records loaded`\n});\n\n// Gửi payload với format cho bar chart\nreturn [\n    { payload: [{ series: [\"Moisture\"], data: [moistureData], labels: labels }] },\n    { payload: [{ series: [\"Temperature\"], data: [tempData], labels: labels }] },\n    { payload: [{ series: [\"Light\"], data: [lightData], labels: labels }] }\n];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1020,
+        "wires": [
+            [
+                "moisture_chart"
+            ],
+            [
+                "temp_chart"
+            ],
+            [
+                "light_chart"
+            ]
+        ]
+    },
+    {
+        "id": "moisture_chart",
+        "type": "ui_chart",
+        "z": "54a42a8de7bec392",
+        "name": "Moisture Chart",
+        "group": "360133341d7b71ef",
+        "order": 4,
+        "width": 10,
+        "height": 10,
+        "label": "Soil Moisture History",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4095",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1030,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "temp_chart",
+        "type": "ui_chart",
+        "z": "54a42a8de7bec392",
+        "name": "Temperature Chart",
+        "group": "360133341d7b71ef",
+        "order": 5,
+        "width": 10,
+        "height": 10,
+        "label": "Temperature History",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ff7f0e",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1040,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "light_chart",
+        "type": "ui_chart",
+        "z": "54a42a8de7bec392",
+        "name": "Light Chart",
+        "group": "360133341d7b71ef",
+        "order": 6,
+        "width": 10,
+        "height": 10,
+        "label": "Light History",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "2000",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#2ca02c",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8caf20a58b9d23cc",
+        "type": "ui_gauge",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "group": "360133341d7b71ef",
+        "order": 2,
+        "width": 10,
+        "height": 10,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C ",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 670,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "led_mode_switch",
+        "type": "ui_switch",
+        "z": "54a42a8de7bec392",
+        "name": "LED Mode",
+        "label": "Điều khiển Led Tự động",
+        "tooltip": "On: automatic mode",
+        "group": "fca515a537726609",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "led_mode",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "auto",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "manual",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 130,
+        "y": 1540,
+        "wires": [
+            [
+                "led_mode_handler"
+            ]
+        ]
+    },
+    {
+        "id": "led_mode_handler",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save Mode",
+        "func": "const mode = msg.payload;\nflow.set('led_mode', mode);\n\nnode.warn(`LED Mode set to: ${mode}`);\n\nnode.status({\n    fill: mode === 'auto' ? 'green' : 'blue',\n    shape: 'dot',\n    text: `Mode: ${mode.toUpperCase()}`\n});\n\nreturn null;",
+        "outputs": 0,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "led_current_brightness",
+        "type": "ui_gauge",
+        "z": "54a42a8de7bec392",
+        "name": "LED Brightness",
+        "group": "fca515a537726609",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Led status",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1060,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "led_manual_slider",
+        "type": "ui_slider",
+        "z": "54a42a8de7bec392",
+        "name": "Manual LED Control",
+        "label": "Điều khiển thủ công (%)",
+        "tooltip": "Chỉ hoạt động khi chế độ thủ công",
+        "group": "fca515a537726609",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "manual",
+        "topicType": "str",
+        "min": 0,
+        "max": "100",
+        "step": 5,
+        "className": "",
+        "x": 500,
+        "y": 1240,
+        "wires": [
+            [
+                "led_manual_control"
+            ]
+        ]
+    },
+    {
+        "id": "led_manual_control",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Manual Control",
+        "func": "const mode = flow.get('led_mode') || 'manual';\n\nif (mode !== 'manual') {\n    node.warn('LED in AUTO mode, manual control disabled');\n    return null;\n}\n\nconst percent = msg.payload;\nconst brightness = Math.round((percent / 100) * 255);\n\nnode.status({\n    fill: 'blue',\n    shape: 'dot',\n    text: `Manual: ${percent}%`\n});\n\nreturn {\n    payload: brightness,\n    topic: 'garden/led/brightness'\n};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 1240,
+        "wires": [
+            [
+                "led_mqtt_out"
+            ]
+        ]
+    },
+    {
+        "id": "led_timer_check",
+        "type": "inject",
+        "z": "54a42a8de7bec392",
+        "name": "Check every 3s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 1380,
+        "wires": [
+            [
+                "led_debug_timer",
+                "led_control_logic"
+            ]
+        ]
+    },
+    {
+        "id": "led_debug_timer",
+        "type": "debug",
+        "z": "54a42a8de7bec392",
+        "name": "Timer Triggered",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "led_control_logic",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Auto LED Logic",
+        "func": "// Kiểm tra mode\nconst mode = flow.get('led_mode') || 'manual';\n\nnode.warn(`Mode: ${mode}`);\n\nif (mode !== 'auto') {\n    node.warn('Not in AUTO mode, skipping...');\n    return null;\n}\n\n// Lấy giá trị lux từ flow context (đã được lưu bởi node Store Light Lux)\nlet currentLux = flow.get('last_light_lux') || 0;\n\nnode.warn(`Current Lux from flow: ${currentLux}`);\n\n// Nếu có message từ MQTT thì cập nhật\nif (msg.topic === 'garden/light/lux') {\n    currentLux = parseFloat(msg.payload);\n    node.warn(`Updated Lux from MQTT: ${currentLux}`);\n}\n\nif (currentLux < 0) {\n    node.warn('Invalid lux reading');\n    return null;\n}\n\n// Thuật toán mới: Phân cấp độ sáng dựa trên lux\nlet ledBrightness = 0;\nlet level = '';\n\nif (currentLux < 100) {\n    // Tối < 100 lux -> Đèn MAX (100%)\n    ledBrightness = 255;\n    level = '100% (< 100 lux)';\n} else if (currentLux < 250) {\n    // Yếu 100-250 lux -> Đèn 75%\n    ledBrightness = 191;\n    level = '75% (100-250 lux)';\n} else if (currentLux < 500) {\n    // Trung bình 250-500 lux -> Đèn 50%\n    ledBrightness = 128;\n    level = '50% (250-500 lux)';\n} else if (currentLux < 750) {\n    // Khá sáng 500-750 lux -> Đèn 25%\n    ledBrightness = 64;\n    level = '25% (500-750 lux)';\n} else if (currentLux < 1000) {\n    // Sáng 750-1000 lux -> Đèn 10%\n    ledBrightness = 26;\n    level = '10% (750-1000 lux)';\n} else {\n    // Rất sáng >= 1000 lux -> Tắt đèn\n    ledBrightness = 0;\n    level = 'OFF (>= 1000 lux)';\n}\n\n// Tính phần trăm\nconst brightnessPercent = Math.round((ledBrightness / 255) * 100);\n\nnode.status({\n    fill: ledBrightness > 0 ? 'green' : 'grey',\n    shape: 'dot',\n    text: `AUTO: ${level} | Lux: ${currentLux.toFixed(0)}`\n});\n\nreturn [\n    {\n        payload: ledBrightness,\n        topic: 'garden/led/brightness',\n        lux: currentLux,\n        brightness: ledBrightness,\n        level: level\n    },\n    {\n        payload: brightnessPercent\n    }\n];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1380,
+        "wires": [
+            [
+                "led_mqtt_out",
+                "led_format_status"
+            ],
+            [
+                "led_current_brightness"
+            ]
+        ]
+    },
+    {
+        "id": "led_mqtt_out",
+        "type": "mqtt out",
+        "z": "54a42a8de7bec392",
+        "name": "LED Brightness",
+        "topic": "garden/led/brightness",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c17c8530551d42b2",
+        "x": 1100,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "led_status_text",
+        "type": "ui_text",
+        "z": "54a42a8de7bec392",
+        "group": "fca515a537726609",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "LED Status",
+        "label": "Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 1270,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "led_format_status",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Format Status",
+        "func": "const lux = msg.lux || 0;\nconst brightness = msg.brightness || 0;\nconst level = msg.level || '';\nconst percent = Math.round((brightness / 255) * 100);\n\nlet status = `Lux: ${lux.toFixed(0)} | LED: ${percent}% ${level ? '(' + level + ')' : ''}`;\n\nreturn {payload: status};",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 1380,
+        "wires": [
+            [
+                "led_status_text"
+            ]
+        ]
+    },
+    {
+        "id": "24d3f8ab2396686e",
+        "type": "delay",
+        "z": "54a42a8de7bec392",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "minute",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 560,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    }
+]
