@@ -248,18 +248,10 @@
         "hidden": false
     },
     {
-        "id": "95291232aec137c4",
-        "type": "ui_tab",
-        "name": "Led Control",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "ef5c1b36f0639d77",
         "type": "ui_group",
         "name": "Led Control",
-        "tab": "95291232aec137c4",
+        "tab": "",
         "order": 1,
         "disp": true,
         "width": 6,
@@ -276,6 +268,78 @@
         "width": 20,
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "ui-base-df18006f",
+        "type": "ui_base",
+        "name": "Dashboard"
+    },
+    {
+        "id": "tab-e6e127d9",
+        "type": "ui_tab",
+        "name": "Login",
+        "icon": "login",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "tab-be8d6273",
+        "type": "ui_tab",
+        "name": "Register",
+        "icon": "person_add",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "grp-83d11752",
+        "type": "ui_group",
+        "name": "Login",
+        "tab": "tab-e6e127d9",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "grp-6a30249d",
+        "type": "ui_group",
+        "name": "Register",
+        "tab": "tab-be8d6273",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "grp-8aa94f3b",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "grp-24006894",
+        "type": "ui_group",
+        "name": "AI",
+        "tab": "eb0e524e4acb4c34",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "2d08eebebe4c7fee",
+        "type": "ui_group",
+        "name": "Group 2",
+        "tab": "",
+        "order": 2,
+        "disp": true,
+        "width": 6
     },
     {
         "id": "27181a8790fea72e",
@@ -1506,5 +1570,426 @@
         "wires": [
             []
         ]
+    },
+    {
+        "id": "ui_form-5aadfab4",
+        "type": "ui_form",
+        "z": "54a42a8de7bec392",
+        "name": "Login Form",
+        "label": "Đăng nhập",
+        "group": "grp-83d11752",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Tên người dùng",
+                "value": "username",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Mật khẩu",
+                "value": "password",
+                "type": "password",
+                "required": true
+            },
+            {
+                "label": "ID Thiết bị",
+                "value": "device",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "login",
+        "cancel": false,
+        "topic": "",
+        "x": 140,
+        "y": 1770,
+        "wires": [
+            [
+                "fn-dba332b7"
+            ]
+        ]
+    },
+    {
+        "id": "fn-dba332b7",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Prepare Login",
+        "func": "msg.username = msg.payload.username;\nmsg.password = msg.payload.password;\nmsg.device = msg.payload.device;\n// build Firebase REST URL\nmsg.method = 'GET';\nmsg.url = 'https://abcd-990cc-default-rtdb.firebaseio.com/users.json';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 1770,
+        "wires": [
+            [
+                "http-20af7a11"
+            ]
+        ]
+    },
+    {
+        "id": "http-20af7a11",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Firebase GET /users",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 600,
+        "y": 1770,
+        "wires": [
+            [
+                "fn-d40eddd0"
+            ]
+        ]
+    },
+    {
+        "id": "fn-d40eddd0",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Check Login",
+        "func": "const users = msg.payload || {};\nconst u = msg.username;\nconst p = msg.password;\nconst d = msg.device;\n\nif (!u || !p || !d) {\n  msg.login = false;\n  msg.error = 'Vui lòng nhập đủ thông tin';\n  return msg;\n}\n\nif (!users[u]) {\n  msg.login = false;\n  msg.error = 'Tài khoản không tồn tại';\n  return msg;\n}\n\nif (users[u].password === p && users[u].device === d) {\n  msg.login = true;\n} else {\n  msg.login = false;\n  msg.error = 'Sai mật khẩu hoặc sai ID thiết bị';\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 810,
+        "y": 1770,
+        "wires": [
+            [
+                "sw-32f5ecc6"
+            ]
+        ]
+    },
+    {
+        "id": "sw-32f5ecc6",
+        "type": "switch",
+        "z": "54a42a8de7bec392",
+        "name": "Login OK?",
+        "property": "login",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1000,
+        "y": 1770,
+        "wires": [
+            [
+                "toast-35548d39",
+                "uictrl-d803d352"
+            ],
+            [
+                "toast-139018a3"
+            ]
+        ]
+    },
+    {
+        "id": "toast-35548d39",
+        "type": "ui_toast",
+        "z": "54a42a8de7bec392",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "name": "Login Success",
+        "x": 1190,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "toast-139018a3",
+        "type": "ui_toast",
+        "z": "54a42a8de7bec392",
+        "position": "top right",
+        "displayTime": "4",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "name": "Login Fail",
+        "x": 1190,
+        "y": 1810,
+        "wires": []
+    },
+    {
+        "id": "uictrl-d803d352",
+        "type": "ui_ui_control",
+        "z": "54a42a8de7bec392",
+        "name": "Go Dashboard",
+        "events": "all",
+        "x": 1190,
+        "y": 1780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui_form-a092bdd5",
+        "type": "ui_form",
+        "z": "54a42a8de7bec392",
+        "name": "Register Form",
+        "label": "Đăng ký tài khoản",
+        "group": "grp-6a30249d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Tên người dùng",
+                "value": "username",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Mật khẩu",
+                "value": "password",
+                "type": "password",
+                "required": true
+            },
+            {
+                "label": "ID Thiết bị",
+                "value": "device",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "register",
+        "cancel": false,
+        "topic": "",
+        "x": 150,
+        "y": 1910,
+        "wires": [
+            [
+                "fn-34e66ec4"
+            ]
+        ]
+    },
+    {
+        "id": "fn-34e66ec4",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Prepare Register",
+        "func": "const u = msg.payload.username;\nconst p = msg.payload.password;\nconst d = msg.payload.device;\n\nif (!u || !p || !d) {\n  msg.error = 'Vui lòng nhập đủ thông tin';\n  return [null, msg];\n}\n\nmsg.user = u;\nmsg.password = p;\nmsg.device = d;\n\nmsg.method = 'PATCH';\nmsg.url = 'https://abcd-990cc-default-rtdb.firebaseio.com/users/' + encodeURIComponent(u) + '.json';\nmsg.payload = { password: p, device: d };\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 1910,
+        "wires": [
+            [
+                "http-4d12be00"
+            ],
+            [
+                "toast-fd22f167"
+            ]
+        ]
+    },
+    {
+        "id": "http-4d12be00",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Firebase PATCH /users/{user}",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": true,
+        "headers": [
+            {
+                "key": "Content-Type",
+                "value": "application/json"
+            }
+        ],
+        "x": 670,
+        "y": 1900,
+        "wires": [
+            [
+                "toast-ec9c2c9e",
+                "uictrl-8c7e5232"
+            ]
+        ]
+    },
+    {
+        "id": "toast-ec9c2c9e",
+        "type": "ui_toast",
+        "z": "54a42a8de7bec392",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "name": "Register Success",
+        "x": 920,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "toast-fd22f167",
+        "type": "ui_toast",
+        "z": "54a42a8de7bec392",
+        "position": "top right",
+        "displayTime": "4",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "name": "Register Fail",
+        "x": 670,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "uictrl-8c7e5232",
+        "type": "ui_ui_control",
+        "z": "54a42a8de7bec392",
+        "name": "Back to Login",
+        "events": "all",
+        "x": 910,
+        "y": 1930,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "inj-744f45dd",
+        "type": "inject",
+        "z": "54a42a8de7bec392",
+        "name": "Poll history (30s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 2210,
+        "wires": [
+            [
+                "http-62ffa1a7"
+            ]
+        ]
+    },
+    {
+        "id": "http-62ffa1a7",
+        "type": "http request",
+        "z": "54a42a8de7bec392",
+        "name": "Firebase GET /history/water",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://abcd-990cc-default-rtdb.firebaseio.com/history/water.json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 410,
+        "y": 2210,
+        "wires": [
+            [
+                "fn-3fb1ed21"
+            ]
+        ]
+    },
+    {
+        "id": "fn-3fb1ed21",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Predict (Regression + Markov)",
+        "func": "let payload = msg.payload;\nlet data = [];\nif (Array.isArray(payload)) data = payload;\nelse if (payload && typeof payload === 'object') data = Object.values(payload);\n\n// numeric clean\nlet y = data.map(v => Number(v)).filter(v => Number.isFinite(v));\n\nfunction linregNext(y){\n  const n = y.length;\n  if (n === 0) return null;\n  if (n === 1) return y[0];\n  let sumx = (n-1)*n/2;\n  let sumx2 = (n-1)*n*(2*n-1)/6;\n  let sumy = y.reduce((a,b)=>a+b,0);\n  let sumxy = 0;\n  for (let i=0;i<n;i++) sumxy += i*y[i];\n  let denom = n*sumx2 - sumx*sumx;\n  if (denom === 0) return y[n-1];\n  let a = (n*sumxy - sumx*sumy)/denom;\n  let b = (sumy - a*sumx)/n;\n  return a*n + b;\n}\n\nfunction markovAvgNext(y){\n  if (y.length < 2) return null;\n  let trans = new Map();\n  for (let i=0;i<y.length-1;i++){\n    let a = y[i], b = y[i+1];\n    if (!trans.has(a)) trans.set(a, []);\n    trans.get(a).push(b);\n  }\n  let last = y[y.length-1];\n  if (!trans.has(last)) return null;\n  let arr = trans.get(last);\n  if (!arr.length) return null;\n  return arr.reduce((a,b)=>a+b,0)/arr.length;\n}\n\nmsg.prediction_regression = linregNext(y);\nmsg.prediction_markov = markovAvgNext(y);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 670,
+        "y": 2210,
+        "wires": [
+            [
+                "txt-1d5dc32e",
+                "txt-f0b312bd"
+            ]
+        ]
+    },
+    {
+        "id": "txt-1d5dc32e",
+        "type": "ui_text",
+        "z": "54a42a8de7bec392",
+        "group": "grp-24006894",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "AI Output Regression",
+        "label": "Dự đoán (Regression):",
+        "format": "{{msg.prediction_regression}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 940,
+        "y": 2190,
+        "wires": []
+    },
+    {
+        "id": "txt-f0b312bd",
+        "type": "ui_text",
+        "z": "54a42a8de7bec392",
+        "group": "grp-24006894",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "AI Output Markov",
+        "label": "Dự đoán (Markov):",
+        "format": "{{msg.prediction_markov}}",
+        "layout": "row-spread",
+        "x": 930,
+        "y": 2230,
+        "wires": []
     }
 ]

@@ -4,6 +4,7 @@
 #include <DHT.h>              // DHT11
 #include <Wire.h>             // I2C
 #include <BH1750.h>           // BH1750 Light Sensor
+#include <ESP32Servo.h>       // Servo
 
 // ================== CẤU HÌNH CHÂN ==================
 #define SOIL_PIN 34           // Cảm biến độ ẩm đất (analog)
@@ -11,11 +12,15 @@
 #define DHTTYPE  DHT11
 #define RELAY_PIN 27          // IN relay điều khiển bơm
 #define LED_PIN 16            // PWM LED (MOSFET AOD4184)
+#define SERVO_PIN 19          // Servo mái che
+#define RAIN_PIN  23          // Cảm biến mưa D0
 
 const bool RELAY_ACTIVE_LOW = true;
+const bool RAIN_ACTIVE_LOW  = true;  // nếu ngược thì đổi false
 
 DHT dht(DHTPIN, DHTTYPE);
 BH1750 lightMeter;            // BH1750 dùng I2C (SDA=21, SCL=22 mặc định)
+Servo roofServo;              // Servo mái che
 
 // ================== BIẾN LƯU TRẠNG THÁI CẢM BIẾN ==================
 int   soilRaw = 0;            // Chỉ giữ RAW
@@ -56,6 +61,9 @@ const char* TOPIC_PUMP_CONTROL = "garden/pump/control";
 // Topic điều khiển độ sáng LED (nhận từ Node-RED)
 const char* TOPIC_LED_BRIGHTNESS = "garden/led/brightness";
 
+// Topic trạng thái mái che servo
+const char* TOPIC_ROOF_STATE = "garden/roof/state";
+
 // ================== TIMER ==================
 unsigned long lastSensorRead = 0;
 const unsigned long SENSOR_INTERVAL_MS = 5000; // 5 giây đọc & gửi 1 lần
@@ -63,7 +71,10 @@ const unsigned long SENSOR_INTERVAL_MS = 5000; // 5 giây đọc & gửi 1 lần
 unsigned long lastBH1750Check = 0;
 const unsigned long BH1750_CHECK_INTERVAL_MS = 10000; // 10 giây kiểm tra 1 lần
 
-// ================== HÀM HỖ TRỢ RELAY ==================
+unsigned long lastRainCheck = 0;
+const unsigned long RAIN_CHECK_INTERVAL_MS = 200; // 200ms kiểm tra mưa
+
+// ================== HÀM HỖ TRỢ RELAY & RAIN ==================
 void relayWrite(bool on) {
   if (RELAY_ACTIVE_LOW) {
     digitalWrite(RELAY_PIN, on ? LOW : HIGH);
@@ -71,6 +82,11 @@ void relayWrite(bool on) {
     digitalWrite(RELAY_PIN, on ? HIGH : LOW);
   }
   pumpOn = on;
+}
+
+bool isRaining() {
+  int v = digitalRead(RAIN_PIN);
+  return RAIN_ACTIVE_LOW ? (v == LOW) : (v == HIGH);
 }
 
 void pumpStart30s() {
@@ -92,6 +108,60 @@ void handlePumpTimeout() {
   if (!pumpOn) return;
   if ((long)(millis() - pumpEndMs) >= 0) {
     pumpStop();
+  }
+}
+
+// ================== SERVO QUAY LIÊN TỤC: 20 VÒNG ==================
+const int SERVO_STOP_US = 1500;
+const int SERVO_CW_US   = 1700;  // quay chiều A
+const int SERVO_CCW_US  = 1300;  // quay chiều ngược
+
+const unsigned long REV_TIME_MS = 1000; // thời gian 1 vòng (ms)
+const int TURNS = 20;
+const unsigned long SERVO_RUN_MS = (unsigned long)TURNS * REV_TIME_MS;
+
+bool lastRainState = false;
+bool servoBusy = false;
+int  servoDir = 0; // +1 CW, -1 CCW
+unsigned long servoEndMs = 0;
+
+void servoStop() {
+  roofServo.writeMicroseconds(SERVO_STOP_US);
+  mqttClient.publish(TOPIC_ROOF_STATE, "STOP");
+}
+
+void servoRunCW() {
+  roofServo.writeMicroseconds(SERVO_CW_US);
+  mqttClient.publish(TOPIC_ROOF_STATE, "CW");
+}
+
+void servoRunCCW() {
+  roofServo.writeMicroseconds(SERVO_CCW_US);
+  mqttClient.publish(TOPIC_ROOF_STATE, "CCW");
+}
+
+void startServoTurns(int dir) {
+  if (servoBusy) return;
+
+  servoBusy = true;
+  servoDir = dir;
+  servoEndMs = millis() + SERVO_RUN_MS;
+
+  if (dir > 0) {
+    Serial.println("[SERVO] RAIN -> rotate CW 20 turns then STOP");
+    servoRunCW();
+  } else {
+    Serial.println("[SERVO] NO RAIN -> rotate CCW 20 turns then STOP");
+    servoRunCCW();
+  }
+}
+
+void handleServoTurns() {
+  if (!servoBusy) return;
+  if ((long)(millis() - servoEndMs) >= 0) {
+    servoStop();
+    servoBusy = false;
+    Serial.println("[SERVO] STOP (done 20 turns)");
   }
 }
 
@@ -246,7 +316,9 @@ void printSensorToSerial() {
   Serial.print("Soil raw: "); Serial.println(soilRaw);
   Serial.print("Temp: "); Serial.print(dhtTemp); Serial.println(" C");
   Serial.print("Light: "); Serial.print(lightLux); Serial.println(" lux");
+  Serial.print("Raining: "); Serial.println(isRaining() ? "YES" : "NO");
   Serial.print("Pump: "); Serial.println(pumpOn ? "ON" : "OFF");
+  Serial.print("ServoBusy: "); Serial.println(servoBusy ? "YES" : "NO");
   Serial.println("=======================\n");
 }
 
@@ -261,9 +333,17 @@ void setup() {
   pinMode(SOIL_PIN, INPUT);
   dht.begin();
 
+  // Rain sensor
+  pinMode(RAIN_PIN, INPUT_PULLUP);
+
   // Relay
   pinMode(RELAY_PIN, OUTPUT);
   relayWrite(false); // tắt bơm lúc khởi động
+
+  // Servo continuous rotation
+  roofServo.setPeriodHertz(50);
+  roofServo.attach(SERVO_PIN, 500, 2400);
+  servoStop();
 
   // PWM LED
   #if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0)
@@ -291,6 +371,10 @@ void setup() {
   // 2. Cấu hình MQTT
   mqttClient.setServer(MQTT_SERVER, MQTT_PORT);
   mqttClient.setCallback(mqttCallback);
+
+  // 3. Init trạng thái mưa
+  lastRainState = isRaining();
+  if (lastRainState) startServoTurns(+1);
 }
 
 // ================== LOOP ==================
@@ -298,18 +382,34 @@ void loop() {
   if (!mqttClient.connected()) reconnectMQTT();
   mqttClient.loop();
   
-  // Xử lý tự động tắt bơm sau 30s
+  // 1) Xử lý servo quay đủ 20 vòng rồi dừng
+  handleServoTurns();
+
+  // 2) Xử lý tự động tắt bơm sau 30s
   handlePumpTimeout();
 
   unsigned long now = millis();
 
-  // Kiểm tra và kết nối lại BH1750 nếu mất kết nối
+  // 3) Kiểm tra mưa: đổi trạng thái thì chạy servo 20 vòng
+  if (now - lastRainCheck >= RAIN_CHECK_INTERVAL_MS) {
+    lastRainCheck = now;
+
+    bool rainingNow = isRaining();
+    if (rainingNow != lastRainState) {
+      lastRainState = rainingNow;
+
+      if (rainingNow) startServoTurns(+1); // mưa -> quay chiều A 20 vòng
+      else            startServoTurns(-1); // hết mưa -> quay ngược 20 vòng
+    }
+  }
+
+  // 4) Kiểm tra và kết nối lại BH1750 nếu mất kết nối
   if (now - lastBH1750Check >= BH1750_CHECK_INTERVAL_MS) {
     lastBH1750Check = now;
     reconnectBH1750();
   }
 
-  // Đọc cảm biến và gửi dữ liệu theo chu kỳ
+  // 5) Đọc cảm biến và gửi dữ liệu theo chu kỳ
   if (now - lastSensorRead >= SENSOR_INTERVAL_MS) {
     lastSensorRead = now;
 
