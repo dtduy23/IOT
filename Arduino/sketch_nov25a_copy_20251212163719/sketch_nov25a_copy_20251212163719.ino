@@ -12,7 +12,6 @@
 #define RELAY_PIN 27          // IN relay điều khiển bơm
 #define LED_PIN 16            // PWM LED (MOSFET AOD4184)
 
-// Logic phổ biến của relay 5V: IN LOW = ON (nếu ngược thì đổi false)
 const bool RELAY_ACTIVE_LOW = true;
 
 DHT dht(DHTPIN, DHTTYPE);
@@ -26,6 +25,7 @@ bool  bh1750Connected = false; // Trạng thái kết nối BH1750
 
 // ================== TRẠNG THÁI BƠM ==================
 bool pumpOn = false;
+unsigned long pumpEndMs = 0;
 
 // ================== CẤU HÌNH PWM LED ==================
 #define PWM_CHANNEL 0
@@ -38,7 +38,7 @@ WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
 // ĐIỀN IP BROKER CỦA BẠN Ở ĐÂY
-const char* MQTT_SERVER = "10.166.190.152";
+const char* MQTT_SERVER = "10.101.217.152";
 const int   MQTT_PORT      = 1883;
 const char* MQTT_CLIENT_ID = "esp32-garden-1";
 
@@ -47,12 +47,11 @@ const char* TOPIC_SOIL_RAW   = "garden/soil/raw";
 const char* TOPIC_DHT_TEMP   = "garden/dht/temp";
 const char* TOPIC_LIGHT_LUX  = "garden/light/lux";
 
-// Topic phục vụ chatbot đơn giản
-const char* TOPIC_CHATBOT_CMD   = "garden/chatbot/cmd";
-const char* TOPIC_CHATBOT_REPLY = "garden/chatbot/reply";
-
 // Topic trạng thái bơm
 const char* TOPIC_PUMP_STATE = "garden/pump/state";
+
+// Topic điều khiển máy bơm (nhận lệnh từ Node-RED)
+const char* TOPIC_PUMP_CONTROL = "garden/pump/control";
 
 // Topic điều khiển độ sáng LED (nhận từ Node-RED)
 const char* TOPIC_LED_BRIGHTNESS = "garden/led/brightness";
@@ -72,6 +71,28 @@ void relayWrite(bool on) {
     digitalWrite(RELAY_PIN, on ? HIGH : LOW);
   }
   pumpOn = on;
+}
+
+void pumpStart30s() {
+  pumpOn = true;
+  pumpEndMs = millis() + 30000UL;
+  relayWrite(true);
+  mqttClient.publish(TOPIC_PUMP_STATE, "ON_30S");
+  Serial.println("[PUMP] ON for 30 seconds");
+}
+
+void pumpStop() {
+  pumpOn = false;
+  relayWrite(false);
+  mqttClient.publish(TOPIC_PUMP_STATE, "OFF");
+  Serial.println("[PUMP] OFF");
+}
+
+void handlePumpTimeout() {
+  if (!pumpOn) return;
+  if ((long)(millis() - pumpEndMs) >= 0) {
+    pumpStop();
+  }
 }
 
 // ================== HÀM ĐIỀU KHIỂN ĐỘ SÁNG LED ==================
@@ -111,7 +132,7 @@ void setupWiFi() {
   Serial.println(WiFi.localIP());
 }
 
-// ================== HÀM CALLBACK MQTT (XỬ LÝ CHATBOT CƠ BẢN) ==================
+// ================== HÀM CALLBACK MQTT ==================
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   String msg = "";
   for (unsigned int i = 0; i < length; i++) msg += (char)payload[i];
@@ -128,37 +149,17 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     return;
   }
   
-  if (String(topic) == String(TOPIC_CHATBOT_CMD)) {
-    String reply;
-
-    // --- lệnh cũ ---
-    if (msg == "soil") {
-      reply = "Do am dat RAW: " + String(soilRaw);
-    } else if (msg == "temp") {
-      reply = "Nhiet do: " + String(dhtTemp) + " C";
-    } else if (msg == "light") {
-      reply = "Anh sang: " + String(lightLux) + " lux";
-
-    // --- lệnh mới ---
-    } else if (msg == "pump_on") {
-      relayWrite(true);
-      mqttClient.publish(TOPIC_PUMP_STATE, "ON");
-      reply = "Pump: ON";
-    } else if (msg == "pump_off") {
-      relayWrite(false);
-      mqttClient.publish(TOPIC_PUMP_STATE, "OFF");
-      reply = "Pump: OFF";
-
-    } else if (msg == "all" || msg == "status") {
-      reply  = "Soil RAW: " + String(soilRaw);
-      reply += ", Temp: " + String(dhtTemp) + " C";
-      reply += ", Light: " + String(lightLux) + " lux";
-      reply += ", Pump: " + String(pumpOn ? "ON" : "OFF");
-    } else {
-      reply = "Lenh: soil/temp/light/status/all/pump_on/pump_off";
+  // Xử lý điều khiển máy bơm
+  if (String(topic) == String(TOPIC_PUMP_CONTROL)) {
+    String m = msg;
+    m.toLowerCase();
+    
+    if (m == "on" || m == "yes" || m == "1") {
+      pumpStart30s();
+    } else if (m == "off" || m == "no" || m == "0") {
+      pumpStop();
     }
-
-    mqttClient.publish(TOPIC_CHATBOT_REPLY, reply.c_str());
+    return;
   }
 }
 
@@ -168,8 +169,8 @@ void reconnectMQTT() {
     Serial.print("Dang ket noi MQTT...");
     if (mqttClient.connect(MQTT_CLIENT_ID)) {
       Serial.println("OK");
-      mqttClient.subscribe(TOPIC_CHATBOT_CMD);
       mqttClient.subscribe(TOPIC_LED_BRIGHTNESS);
+      mqttClient.subscribe(TOPIC_PUMP_CONTROL);
     } else {
       Serial.print("Failed, rc=");
       Serial.print(mqttClient.state());
@@ -296,6 +297,9 @@ void setup() {
 void loop() {
   if (!mqttClient.connected()) reconnectMQTT();
   mqttClient.loop();
+  
+  // Xử lý tự động tắt bơm sau 30s
+  handlePumpTimeout();
 
   unsigned long now = millis();
 

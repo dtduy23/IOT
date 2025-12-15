@@ -6,5 +6,6 @@
         "password": "qmxx dmlk uscs urta"
     },
     "34c08b4e73661d20": {},
-    "thingspeak_read_http": {}
+    "thingspeak_read_http": {},
+    "thingspeak_http": {}
 }

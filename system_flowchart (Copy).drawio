@@ -1,0 +1,234 @@
+<mxfile host="app.diagrams.net" modified="2025-12-15T00:00:00.000Z" agent="5.0" version="21.6.5" etag="system-diagram" type="device">
+  <diagram name="IoT Garden System Flow" id="system-flow">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- INPUT DEVICES -->
+        <mxCell id="soil_sensor" value="Soil Moisture&#xa;Sensor&#xa;(Analog)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="dht11" value="DHT11&#xa;Temperature&#xa;Sensor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="bh1750" value="BH1750&#xa;Light Sensor&#xa;(I2C)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- ESP32 BOARD -->
+        <mxCell id="esp32" value="ESP32&#xa;Board&#xa;(WiFiManager)&#xa;MQTT Client" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="240" y="280" width="160" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from sensors to ESP32 -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="soil_sensor" target="esp32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label1" value="GPIO 34" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow1">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="dht11" target="esp32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label2" value="GPIO 4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow2">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="bh1750" target="esp32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label3" value="I2C (SDA/SCL)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow3">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- OUTPUT DEVICES -->
+        <mxCell id="relay_pump" value="Relay&#xa;Water Pump&#xa;Control" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="600" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="led_mosfet" value="LED Light&#xa;(MOSFET AOD4184)&#xa;PWM Control" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="720" width="120" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from ESP32 to outputs -->
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#b85450;" edge="1" parent="1" source="esp32" target="relay_pump">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label4" value="GPIO 27" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow4">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#b85450;" edge="1" parent="1" source="esp32" target="led_mosfet">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label5" value="GPIO 16 (PWM)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;" vertex="1" connectable="0" parent="arrow5">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- MQTT BROKER -->
+        <mxCell id="mqtt_broker" value="Mosquitto&#xa;MQTT Broker&#xa;10.166.190.152:1883" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="500" y="300" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow ESP32 to MQTT -->
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#9673a6;startArrow=classic;startFill=1;" edge="1" parent="1" source="esp32" target="mqtt_broker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label6" value="WiFi&#xa;MQTT Topics:&#xa;garden/soil/raw&#xa;garden/dht/temp&#xa;garden/light/lux&#xa;garden/pump/state&#xa;garden/led/brightness" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#9673a6;" vertex="1" connectable="0" parent="arrow6">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="-10" y="-50" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- NODE-RED -->
+        <mxCell id="nodered" value="Node-RED Server&#xa;(Data Processing &amp; Logic)&#xa;&#xa;• MQTT Subscribe&#xa;• Dashboard UI&#xa;• AI Chatbot (Gemini)&#xa;• Auto LED Control&#xa;• Pump Control&#xa;• ThingSpeak Integration" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="780" y="240" width="240" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow MQTT to Node-RED -->
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#82b366;startArrow=classic;startFill=1;" edge="1" parent="1" source="mqtt_broker" target="nodered">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label7" value="MQTT Protocol" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontColor=#82b366;" vertex="1" connectable="0" parent="arrow7">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- DASHBOARD -->
+        <mxCell id="dashboard" value="Web Dashboard&#xa;http://IP:1880/ui&#xa;&#xa;• Real-time Sensor Data&#xa;• LED Manual Control&#xa;• LED Auto Mode Setup&#xa;• Time Window Setup&#xa;• Pump Control&#xa;• AI Chat Interface&#xa;• ThingSpeak Charts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="480" width="200" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Node-RED to Dashboard -->
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#d79b00;startArrow=classic;startFill=1;" edge="1" parent="1" source="nodered" target="dashboard">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label8" value="HTTP/WebSocket" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#d79b00;" vertex="1" connectable="0" parent="arrow8">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- THINGSPEAK CLOUD -->
+        <mxCell id="thingspeak" value="ThingSpeak Cloud&#xa;Channel: 3202521&#xa;&#xa;Write API:&#xa;8Q4PQGP66QX75FCU&#xa;&#xa;Read API:&#xa;9HHZNPFSPBTLZC0Y&#xa;&#xa;Fields:&#xa;• field1: Light (lux)&#xa;• field2: Soil Moisture&#xa;• field3: Temperature" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#b1ddf0;strokeColor=#10739e;fontSize=10;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="60" width="240" height="240" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Node-RED to ThingSpeak -->
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;strokeColor=#10739e;startArrow=classic;startFill=1;" edge="1" parent="1" source="nodered" target="thingspeak">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label9" value="HTTPS REST API&#xa;Write: Every 60s&#xa;Read: Every 120s" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#10739e;" vertex="1" connectable="0" parent="arrow9">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="-20" y="-30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- GEMINI AI -->
+        <mxCell id="gemini" value="Google Gemini AI&#xa;API&#xa;&#xa;• Natural Language&#xa;  Processing&#xa;• Garden Assistant&#xa;• Sensor Data Analysis&#xa;• Recommendations" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="780" y="520" width="180" height="180" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Node-RED to Gemini -->
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#666666;startArrow=classic;startFill=1;" edge="1" parent="1" source="nodered" target="gemini">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label10" value="HTTPS API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#666666;" vertex="1" connectable="0" parent="arrow10">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- USER DEVICE -->
+        <mxCell id="user_device" value="User Device&#xa;&#xa;🖥️ PC / Laptop&#xa;📱 Smartphone&#xa;&#xa;Web Browser" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fad9d5;strokeColor=#ae4132;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="280" width="160" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Dashboard to User -->
+        <mxCell id="arrow11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#ae4132;startArrow=classic;startFill=1;" edge="1" parent="1" source="dashboard" target="user_device">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label11" value="HTTP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=10;fontColor=#ae4132;" vertex="1" connectable="0" parent="arrow11">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Arrow ThingSpeak to User (for viewing charts) -->
+        <mxCell id="arrow12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#10739e;dashed=1;" edge="1" parent="1" source="thingspeak" target="user_device">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label12" value="View Charts&#xa;(via Dashboard)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;fontColor=#10739e;" vertex="1" connectable="0" parent="arrow12">
+          <mxGeometry x="0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="10" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- DATA FLOW LEGEND -->
+        <mxCell id="legend_box" value="DATA FLOW LEGEND" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontSize=14;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="900" width="400" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend1" value="📊 Sensor Data Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#6c8ebf;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="940" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend2" value="⚡ Control Commands" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#b85450;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="970" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend3" value="🌐 Network Communication" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#9673a6;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="1000" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend4" value="☁️ Cloud Services" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#10739e;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="250" y="940" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend5" value="🤖 AI Processing" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="250" y="970" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend6" value="👤 User Interface" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#d79b00;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="250" y="1000" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- SYSTEM TITLE -->
+        <mxCell id="title" value="IoT SMART GARDEN MONITORING SYSTEM - COMPLETE FLOW DIAGRAM" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=18;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="1080" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- AUTO LED LOGIC BOX -->
+        <mxCell id="auto_led_box" value="AUTO LED LOGIC&#xa;&#xa;• Time Window Check (Start-End)&#xa;• Lux-based Brightness:&#xa;  - &lt;100 lux → 100%&#xa;  - 100-250 lux → 75%&#xa;  - 250-500 lux → 50%&#xa;  - 500-750 lux → 25%&#xa;  - 750-1000 lux → 10%&#xa;  - ≥1000 lux → OFF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9e6;strokeColor=#f0ad4e;fontSize=10;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="540" width="200" height="160" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow Node-RED to Auto LED -->
+        <mxCell id="arrow13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#f0ad4e;dashed=1;" edge="1" parent="1" source="nodered" target="auto_led_box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- SYSTEM INFO BOX -->
+        <mxCell id="info_box" value="SYSTEM COMPONENTS&#xa;&#xa;• ESP32 WiFi: WiFiManager (Auto-config)&#xa;• MQTT Broker: Mosquitto 10.166.190.152:1883&#xa;• Node-RED: v4.1.2 + Dashboard v3.6.6&#xa;• Cloud: ThingSpeak (60s write / 120s read)&#xa;• AI: Google Gemini API&#xa;• PWM: ESP32 8-bit (0-255)&#xa;• Sensors: DHT11, BH1750, Analog Soil&#xa;• Outputs: Relay, MOSFET AOD4184" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5fe;strokeColor=#01579b;fontSize=10;fontStyle=0;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="480" width="160" height="220" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

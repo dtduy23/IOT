@@ -152,7 +152,7 @@
         "id": "c17c8530551d42b2",
         "type": "mqtt-broker",
         "name": "",
-        "broker": "10.166.190.152",
+        "broker": "127.0.0.1",
         "port": "1883",
         "clientid": "",
         "autoConnect": true,
@@ -648,7 +648,7 @@
         "method": "POST",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyBbBCcky_Mh2wlJxdzmiKB1ActoEslIig0",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyA_rdDImkI8MqX9UjfcNZ7pRx40OhsJ5tQ",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -899,30 +899,13 @@
         "proxy": "",
         "insecureHTTPParser": false,
         "authType": "",
+        "senderr": false,
+        "headers": [],
         "x": 640,
         "y": 900,
         "wires": [
-            [
-                "thingspeak_debug"
-            ]
+            []
         ]
-    },
-    {
-        "id": "thingspeak_debug",
-        "type": "debug",
-        "z": "54a42a8de7bec392",
-        "name": "ThingSpeak Response",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 890,
-        "y": 900,
-        "wires": []
     },
     {
         "id": "thingspeak_read_inject",
@@ -957,7 +940,7 @@
         "method": "GET",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "https://api.thingspeak.com/channels/3202521/feeds.json?api_key=9HHZNPFSPBTLZC0Y&results=20",
+        "url": "https://api.thingspeak.com/channels/3202521/feeds.json?api_key=9HHZNPFSPBTLZC0Y&results=600",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -1160,14 +1143,55 @@
         "wires": []
     },
     {
+        "id": "led_init_time",
+        "type": "inject",
+        "z": "54a42a8de7bec392",
+        "name": "Init Time Defaults",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1500,
+        "wires": [
+            [
+                "led_set_time_defaults"
+            ]
+        ]
+    },
+    {
+        "id": "led_set_time_defaults",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Set Time Defaults",
+        "func": "// Khởi tạo thời gian mặc định nếu chưa có\nif (flow.get('led_start_time') === undefined) {\n    flow.set('led_start_time', '04:00');\n}\nif (flow.get('led_end_time') === undefined) {\n    flow.set('led_end_time', '20:00');\n}\n\nnode.warn('LED time defaults: 04:00 - 20:00');\nreturn null;",
+        "outputs": 0,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1500,
+        "wires": []
+    },
+    {
         "id": "led_mode_switch",
         "type": "ui_switch",
         "z": "54a42a8de7bec392",
         "name": "LED Mode",
-        "label": "Điều khiển Led Tự động",
+        "label": "Automatic Mode",
         "tooltip": "On: automatic mode",
         "group": "fca515a537726609",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -1210,12 +1234,80 @@
         "wires": []
     },
     {
+        "id": "led_time_start",
+        "type": "ui_text_input",
+        "z": "54a42a8de7bec392",
+        "name": "Start Time",
+        "label": "starting time",
+        "tooltip": "Nhập theo định dạng HH:MM (ví dụ: 04:00)",
+        "group": "fca515a537726609",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "start_time",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 130,
+        "y": 1580,
+        "wires": [
+            [
+                "led_save_time_config"
+            ]
+        ]
+    },
+    {
+        "id": "led_time_end",
+        "type": "ui_text_input",
+        "z": "54a42a8de7bec392",
+        "name": "End Time",
+        "label": "End time",
+        "tooltip": "Nhập theo định dạng HH:MM (ví dụ: 20:00)",
+        "group": "fca515a537726609",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "mode": "text",
+        "delay": 300,
+        "topic": "end_time",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "str",
+        "x": 130,
+        "y": 1620,
+        "wires": [
+            [
+                "led_save_time_config"
+            ]
+        ]
+    },
+    {
+        "id": "led_save_time_config",
+        "type": "function",
+        "z": "54a42a8de7bec392",
+        "name": "Save Time Config",
+        "func": "const topic = msg.topic;\nconst value = msg.payload;\n\nif (topic === 'start_time') {\n    flow.set('led_start_time', value);\n    node.warn(`LED Start Time: ${value}`);\n} else if (topic === 'end_time') {\n    flow.set('led_end_time', value);\n    node.warn(`LED End Time: ${value}`);\n}\n\nreturn null;",
+        "outputs": 0,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1600,
+        "wires": []
+    },
+    {
         "id": "led_current_brightness",
         "type": "ui_gauge",
         "z": "54a42a8de7bec392",
         "name": "LED Brightness",
         "group": "fca515a537726609",
-        "order": 3,
+        "order": 5,
         "width": 0,
         "height": 0,
         "gtype": "gage",
@@ -1242,10 +1334,10 @@
         "type": "ui_slider",
         "z": "54a42a8de7bec392",
         "name": "Manual LED Control",
-        "label": "Điều khiển thủ công (%)",
+        "label": "Manual LED control (%)",
         "tooltip": "Chỉ hoạt động khi chế độ thủ công",
         "group": "fca515a537726609",
-        "order": 2,
+        "order": 1,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -1305,34 +1397,16 @@
         "y": 1380,
         "wires": [
             [
-                "led_debug_timer",
                 "led_control_logic"
             ]
         ]
-    },
-    {
-        "id": "led_debug_timer",
-        "type": "debug",
-        "z": "54a42a8de7bec392",
-        "name": "Timer Triggered",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 740,
-        "y": 1320,
-        "wires": []
     },
     {
         "id": "led_control_logic",
         "type": "function",
         "z": "54a42a8de7bec392",
         "name": "Auto LED Logic",
-        "func": "// Kiểm tra mode\nconst mode = flow.get('led_mode') || 'manual';\n\nnode.warn(`Mode: ${mode}`);\n\nif (mode !== 'auto') {\n    node.warn('Not in AUTO mode, skipping...');\n    return null;\n}\n\n// Lấy giá trị lux từ flow context (đã được lưu bởi node Store Light Lux)\nlet currentLux = flow.get('last_light_lux') || 0;\n\nnode.warn(`Current Lux from flow: ${currentLux}`);\n\n// Nếu có message từ MQTT thì cập nhật\nif (msg.topic === 'garden/light/lux') {\n    currentLux = parseFloat(msg.payload);\n    node.warn(`Updated Lux from MQTT: ${currentLux}`);\n}\n\nif (currentLux < 0) {\n    node.warn('Invalid lux reading');\n    return null;\n}\n\n// Thuật toán mới: Phân cấp độ sáng dựa trên lux\nlet ledBrightness = 0;\nlet level = '';\n\nif (currentLux < 100) {\n    // Tối < 100 lux -> Đèn MAX (100%)\n    ledBrightness = 255;\n    level = '100% (< 100 lux)';\n} else if (currentLux < 250) {\n    // Yếu 100-250 lux -> Đèn 75%\n    ledBrightness = 191;\n    level = '75% (100-250 lux)';\n} else if (currentLux < 500) {\n    // Trung bình 250-500 lux -> Đèn 50%\n    ledBrightness = 128;\n    level = '50% (250-500 lux)';\n} else if (currentLux < 750) {\n    // Khá sáng 500-750 lux -> Đèn 25%\n    ledBrightness = 64;\n    level = '25% (500-750 lux)';\n} else if (currentLux < 1000) {\n    // Sáng 750-1000 lux -> Đèn 10%\n    ledBrightness = 26;\n    level = '10% (750-1000 lux)';\n} else {\n    // Rất sáng >= 1000 lux -> Tắt đèn\n    ledBrightness = 0;\n    level = 'OFF (>= 1000 lux)';\n}\n\n// Tính phần trăm\nconst brightnessPercent = Math.round((ledBrightness / 255) * 100);\n\nnode.status({\n    fill: ledBrightness > 0 ? 'green' : 'grey',\n    shape: 'dot',\n    text: `AUTO: ${level} | Lux: ${currentLux.toFixed(0)}`\n});\n\nreturn [\n    {\n        payload: ledBrightness,\n        topic: 'garden/led/brightness',\n        lux: currentLux,\n        brightness: ledBrightness,\n        level: level\n    },\n    {\n        payload: brightnessPercent\n    }\n];",
+        "func": "// Kiểm tra mode\nconst mode = flow.get('led_mode') || 'manual';\n\nif (mode !== 'auto') {\n    return null;\n}\n\n// Kiểm tra khung giờ chiếu sáng\nconst startTime = flow.get('led_start_time') || '04:00';\nconst endTime = flow.get('led_end_time') || '20:00';\n\nconst now = new Date();\nconst currentHour = now.getHours();\nconst currentMinute = now.getMinutes();\nconst currentTimeMinutes = currentHour * 60 + currentMinute;\n\nconst [startHour, startMin] = startTime.split(':').map(Number);\nconst [endHour, endMin] = endTime.split(':').map(Number);\nconst startTimeMinutes = startHour * 60 + startMin;\nconst endTimeMinutes = endHour * 60 + endMin;\n\nlet inTimeWindow = false;\nif (endTimeMinutes > startTimeMinutes) {\n    // Không qua đêm (ví dụ: 04:00 - 20:00)\n    inTimeWindow = (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes);\n} else {\n    // Qua đêm (ví dụ: 20:00 - 04:00)\n    inTimeWindow = (currentTimeMinutes >= startTimeMinutes || currentTimeMinutes <= endTimeMinutes);\n}\n\nif (!inTimeWindow) {\n    // Ngoài khung giờ chiếu sáng -> Tắt đèn\n    node.status({\n        fill: 'grey',\n        shape: 'ring',\n        text: `Outside time window (${startTime}-${endTime})`\n    });\n    \n    return [\n        {\n            payload: 0,\n            topic: 'garden/led/brightness',\n            lux: 0,\n            brightness: 0,\n            level: 'OFF (outside time)'\n        },\n        {\n            payload: 0\n        }\n    ];\n}\n\n// Lấy giá trị lux từ flow context\nlet currentLux = flow.get('last_light_lux') || 0;\n\nif (currentLux < 0) {\n    return null;\n}\n\n// Thuật toán: Phân cấp độ sáng dựa trên lux\nlet ledBrightness = 0;\nlet level = '';\n\nif (currentLux < 100) {\n    ledBrightness = 255;\n    level = '100%';\n} else if (currentLux < 250) {\n    ledBrightness = 191;\n    level = '75%';\n} else if (currentLux < 500) {\n    ledBrightness = 128;\n    level = '50%';\n} else if (currentLux < 750) {\n    ledBrightness = 64;\n    level = '25%';\n} else if (currentLux < 1000) {\n    ledBrightness = 26;\n    level = '10%';\n} else {\n    ledBrightness = 0;\n    level = 'OFF';\n}\n\nconst brightnessPercent = Math.round((ledBrightness / 255) * 100);\n\nnode.status({\n    fill: ledBrightness > 0 ? 'green' : 'grey',\n    shape: 'dot',\n    text: `AUTO: ${level} | Lux: ${currentLux.toFixed(0)} | Time: ${startTime}-${endTime}`\n});\n\nreturn [\n    {\n        payload: ledBrightness,\n        topic: 'garden/led/brightness',\n        lux: currentLux,\n        brightness: ledBrightness,\n        level: level\n    },\n    {\n        payload: brightnessPercent\n    }\n];",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
@@ -1374,7 +1448,7 @@
         "type": "ui_text",
         "z": "54a42a8de7bec392",
         "group": "fca515a537726609",
-        "order": 4,
+        "order": 6,
         "width": 0,
         "height": 0,
         "name": "LED Status",
